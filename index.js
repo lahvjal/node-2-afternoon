@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 massive(CONNECTION_STRING)
   .then(dbInstance => {
     app.set("db", dbInstance);
+    console.log(app);
   })
   .catch(error => {
     console.log(error);

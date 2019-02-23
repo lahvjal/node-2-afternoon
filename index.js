@@ -12,8 +12,14 @@ const app = express();
 app.use(bodyParser.json());
 
 //database connection
-massive();
+massive(CONNECTION_STRING)
+  .then(dbInstance => {
+    app.set("db", dbInstance);
+  })
+  .catch(error => {
+    console.log(error);
+  });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT} fool!`);
+  console.log(`Server is running on ${PORT}`);
 });

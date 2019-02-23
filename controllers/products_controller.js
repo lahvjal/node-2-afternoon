@@ -1,8 +1,10 @@
 module.exports = {
   //create product function
   create: (rep, res) => {
-    req.app.db
-      .create_product()
+    let { name, description, price, image_url } = req.body;
+    req.app
+      .get("db")
+      .create_product([name, description, price, image_url])
       .then(() => {
         res.status(200).send("Created");
       })
@@ -12,8 +14,10 @@ module.exports = {
   },
   //read product function
   getOne: (req, res) => {
-    req.app.db
-      .read_product()
+    let { id } = req.params;
+    req.app
+      .get("db")
+      .read_product([id])
       .then(product => {
         res.status(200).send(product);
       })
@@ -24,7 +28,8 @@ module.exports = {
   },
   //read all products
   getAll: (req, res) => {
-    req.app.db
+    req.app
+      .get("db")
       .read_products()
       .then(products => {
         res.status(200).send(products);
@@ -36,8 +41,11 @@ module.exports = {
   },
   //update product function
   update: (req, res) => {
-    req.app.db
-      .update_product()
+    let { id } = req.params;
+    let { desc } = req.query;
+    req.app
+      .get("db")
+      .update_product([desc, id])
       .then(() => {
         res.status(200).send("updated");
       })
@@ -47,8 +55,10 @@ module.exports = {
   },
   //delete product function
   delete: (req, res) => {
-    req.app.db
-      .delete_product()
+    let { id } = req.params;
+    req.app
+      .get("db")
+      .delete_product([id])
       .then(() => {
         res.status(200).send("deleted");
       })

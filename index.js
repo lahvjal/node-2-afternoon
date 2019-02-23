@@ -4,6 +4,9 @@ const massive = require("massive");
 const cors = require("cors");
 require("dotenv").config();
 
+//controllers
+const product_controller = require("./controllers/products_controller");
+
 //destruct variables from .env
 const { PORT, CONNECTION_STRING } = process.env;
 
@@ -21,6 +24,14 @@ massive(CONNECTION_STRING)
     console.log(error);
   });
 
+//products table end-points
+app.get("/api/products", product_controller.getAll);
+app.get("/api/products/:id", product_controller.getOne);
+app.put("/api/products/:id", product_controller.update);
+app.post("/api/products", product_controller.create);
+app.delete("/api/products/:id", product_controller.delete);
+
+//get server listening on a port
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 });
